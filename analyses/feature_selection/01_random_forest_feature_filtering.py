@@ -31,19 +31,19 @@ best_random_forest_model = None
 
 # try different combinations of hyperparameters possible
 for hyperparam_config in random_forest_hyperparams:
-    print(hyperparam_config)
+    # Define random forest model with custom hyperparameter settings
     random_forest_model = RandomForestClassifier(
-        oob_score=f1_score, # OOB score metric set to F1 Score
+        oob_score=f1_score, # using the OOB samples and setting the OOB score metric to F1 Score
         n_estimators=200, # Fix number of trees to control computational load
         max_depth = hyperparam_config["max_depth"], 
         max_features = hyperparam_config["max_features"], 
-        random_state=1853006,
+        random_state=1853006, # seed set to CID for reproducibility
         class_weight="balanced" # account for class imbalance 
     )
 
     random_forest_model.fit(data_X, data_Y) # fit random forest classifier
     
-    # better configuarion found, update 
+    # if a better configuarion is found, update this
     if random_forest_model.oob_score_> best_oob_score:
         best_oob_score = random_forest_model.oob_score_
         best_random_forest_model = random_forest_model
@@ -56,6 +56,6 @@ top_20_features_names = data_X.columns[top_20_features_idx] # get top 20 feature
 top_20_features_names_pd = pd.DataFrame(top_20_features_names, columns=["feature_name"]) 
 top_20_features_names_pd.to_csv("../../outputs/feature_selection/feature_lists/random_forest_filtered_features_list.txt", index=False) # write top feature names to txt file
 
-# save the best model so training / tuning doesnt have to be run again
+# save the best model so training / tuning doesnt have to be run again for efficiency
 with open("../../outputs/feature_selection/feature_selector_random_forest_trained.pkl", "wb") as model_file:
     pickle.dump(best_random_forest_model, model_file)
