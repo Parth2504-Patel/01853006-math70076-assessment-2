@@ -1,0 +1,21 @@
+feature_name
+Retained Earnings to Total Assets
+Total income/Total expense
+Equity to Liability
+Degree of Financial Leverage (DFL)
+Interest Expense Ratio
+Interest Coverage Ratio (Interest expense to EBIT)
+Cash/Total Assets
+Current Liability to Current Assets
+Inventory/Working Capital
+Operating profit per person
+Total expense/Assets
+Total Asset Growth Rate
+Continuous Net Profit Growth Rate
+Tax rate (A)
+No-credit Interval
+Total Asset Return Growth Rate Ratio
+Cash Flow to Liability
+Quick Assets/Total Assets
+Long-term fund suitability ratio (A)
+Cash Turnover Rate
