@@ -13,7 +13,7 @@ from sklearn.metrics import f1_score
 import pickle
 
 # Read in data and list of filtered features
-train_dataset = pd.read_csv("../../data/derived/scaled_train_dataset.csv") # relative file pathing 
+train_dataset = pd.read_csv("../../data/derived/scaled_balanced_train_dataset.csv") # relative file pathing 
 vif_filtered_feature_list = pd.read_csv("../../outputs/feature_selection/feature_lists/vif_filtered_features_list.txt")["feature_name"] # list containing VIF filtered features
 
 data_X = train_dataset[vif_filtered_feature_list] # get all X's using the filtered features
@@ -38,7 +38,6 @@ for hyperparam_config in random_forest_hyperparams:
         max_depth = hyperparam_config["max_depth"], 
         max_features = hyperparam_config["max_features"], 
         random_state=1853006, # seed set to CID for reproducibility
-        class_weight="balanced" # account for class imbalance 
     )
 
     random_forest_model.fit(data_X, data_Y) # fit random forest classifier
