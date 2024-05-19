@@ -1,6 +1,6 @@
 '''
 This file fits the Logistic Regression model and the Gradient Boosting Classifer model.
-For both, a grid search cross validation is done to tune the hyperparameters, (aiming to maximise the F1 score)
+For both, a grid search cross validation is done to tune its corresponding hyperparameters, and the hyperparamter configuration that attains the best mean F1 score is chosen.
 The results of the tuning and the tuned models themselves are saved so the training doesnt have to be repeated as it is time-consuming
 '''
 
@@ -16,42 +16,85 @@ import pickle
 train_dataset = pd.read_csv("../../data/derived/selected_features_train_dataset.csv")
 all_xs = train_dataset.drop("bankrupt_status", axis=1)
 all_ys = train_dataset["bankrupt_status"]
-ten_folds = KFold(n_splits=10, shuffle=True, random_state=1853006) # create ten folds of the dataset, can provide same split to all models to fit to
 
-#============================
+ten_folds = KFold(n_splits=10, shuffle=True, random_state=1853006) # create ten fold split of the dataset, can provide same split to all models to fit to
+
+def sort_and_write_scores(desired_df, sort_by_column, save_file_path):
+    '''
+    The function takes in a dataframe, and sorts it by absolute value using the column name specified, and writes this sorted dataframe to csv for future reference. 
+    The function sorts by the absolute value to account for models such as (logistic) regression, where the magnitude of the coefficient is an indicator of its importance to the model.
+    This function allows easy scalability if more models are added in the future.
+    '''
+
+    sorted_desired_df = desired_df.sort_values(by=sort_by_column, ascending=False, key=abs) # sorts by absolute value in descending order using the column name specified
+    
+    try:
+        sorted_desired_df.to_csv(save_file_path, index=False) # write the sorted dataframe to csv to the file path that is specified
+
+    # try catch some common exceptions to provide more informative error to user
+    except PermissionError as perm_err:
+        # Catches cases where there is a permission error
+        print(f"Permission is denied to write to file path {save_file_path}, Please check permissions \n The exact error is {perm_err}")   
+        
+    except pd.errors.EmptyDataError as empty_df_err:
+        # Error if the dataframe is empty
+        print(f"The dataframe is empty, please check dataframe construction \n Exact error is {empty_df_err}")
+    
+    except Exception as e:
+        print(f"Unexpected error has occured \n Exact error is {e}")   
+
+def save_trained_model(trained_model, save_file_path):
+    '''
+    This function takes the trained model and saves it at the file path specified in .pkl format so that training doesnt have to be rerun.
+    '''
+    try:
+        with open(save_file_path, "wb") as model_file:
+            pickle.dump(trained_model, model_file) # save trained model as a .pkl file    
+
+    except Exception as e:
+        print(f"Unexpected error, exact error is {e}")
+        
+#========================================================
 # Logistic Regression
-#============================
+#========================================================
 
 penalty_param_range = np.linspace(0.001, 100, 1000) # define range of values to try for the hyperparameter
+
 # Perform cross-validation to tune hyperparameter
 log_reg_CV = LogisticRegressionCV(
     penalty="l1", # l1 penalty used for its sparsity property,
     solver="liblinear", # default solver doesnt support l1 penalty
-    Cs=penalty_param_range,
+    Cs=penalty_param_range, # pass in the range of values to try for hyperparameter
     scoring="f1", # regularisation parameter that maximises F1 score is chosen
     cv=ten_folds, # 10-Fold CV used
     random_state=1853006
 )
-log_reg_CV.fit(all_xs, all_ys) # perform gridsearchCV
 
-# Get all coefficients 
-all_logistic_reg_coeffs = log_reg_CV.coef_[0] # get coefficients 
+log_reg_CV.fit(all_xs, all_ys) # perform gridsearchCV
+all_logistic_reg_coeffs = log_reg_CV.coef_[0] # get all coefficients 
+
 # Store in dataframe for visual purposes, and easy to write to csv
 coeffs_df = pd.DataFrame({
     "Feature" : all_xs.columns,
     "Coefficient" : all_logistic_reg_coeffs
 })
 
-sorted_logistic_coeffs_df = coeffs_df.sort_values(by="Coefficient", ascending=False, key=abs) # sort by the absolute value (descending order), larger absolute implies more importance
-sorted_logistic_coeffs_df.to_csv("../../outputs/modelling/logistic_regression/logistic_reg_coeffs.csv", index=False) # Save sorted feautre name and corresponding coefficient to csv
+# Save the sorted coefficient values to a csv for future reference
+sort_and_write_scores(
+    desired_df=coeffs_df,
+    sort_by_column="Coefficient",
+    save_file_path= "../../outputs/modelling/logistic_regression/logistic_reg_coeffs.csv"
+)
 
-# Note LogisticRegressionCV automatically at the end fits a model using the best hyperparameter found, thus can directly use it
-with open("../../outputs/modelling/logistic_regression/logistic_reg_trained.pkl", "wb") as log_reg_file:
-    pickle.dump(log_reg_CV, log_reg_file) # save trained logistic regression model as a .pkl file 
+save_trained_model(
+    trained_model=log_reg_CV, # Note LogisticRegressionCV automatically at the end fits a model using the best hyperparameter found, thus can directly use it
+    save_file_path="../../outputs/modelling/logistic_regression/logistic_reg_trained.pkl"
+)
 
-#============================
+#========================================================
 # Gradient Boosting Classifier
-#============================
+#========================================================
+
 # Define a parameter grid of the hyperparameters to try 
 gradient_boosting_param_grid = {
     "learning_rate" : [0.05, 0.1, 0.15, 0.2],
@@ -71,13 +114,19 @@ gradient_boosting_CV = GridSearchCV(
 gradient_boosting_CV.fit(all_xs, all_ys) # perform gridsearch cross-validation for gradient boosting classifier
 best_gb_classifier = gradient_boosting_CV.best_estimator_ # get model with best hyperparameter configuration
 
-# Save the best model for later reference
-with open("../../outputs/modelling/gradient_boosting_classifier/gbc_trained.pkl", "wb") as gb_cls_file:
-    pickle.dump(best_gb_classifier, gb_cls_file)
-
 gbc_feature_imp = pd.DataFrame({
     "Feature"  : all_xs.columns,
     "Importance Score" : best_gb_classifier.feature_importances_
 })
-gbc_feature_imp_sorted = gbc_feature_imp.sort_values(by="Importance Score", ascending=False) # sort from most to least important using score
-gbc_feature_imp_sorted.to_csv("../../outputs/modelling/gradient_boosting_classifier/gbc_feature_importance_scores.csv", index=False)
+
+# Save the sorted coefficient values to a csv for future reference
+sort_and_write_scores(
+    desired_df=gbc_feature_imp,
+    sort_by_column="Importance Score",
+    save_file_path= "../../outputs/modelling/gradient_boosting_classifier/gbc_feature_importance_scores.csv"
+)
+
+save_trained_model(
+    trained_model=best_gb_classifier,
+    save_file_path="../../outputs/modelling/gradient_boosting_classifier/gbc_trained.pkl"
+)
