@@ -15,16 +15,17 @@ def perform_SHAP_and_create_plot(fitted_model, x_train_data, x_test_data, model_
     '''
     model_explainer = shap.Explainer(fitted_model, x_train_data) # creates explainer object using the model fitted and training data
     model_shap_vals = model_explainer(x_test_data) # calculate shap values for the test dataset
-    
+
     # Visual plot settings
     plt.figure(figsize=(20,6))
-    shap.plots.bar(model_shap_vals, max_display=10, show=False)
+    shap.plots.bar(model_shap_vals, max_display=11, show=False)
     plt.yticks(fontsize=6)
     plt.xlabel("Mean absolute SHAP value", fontsize=6)
     split_underscore = model_name.split("_")
     model_title = " ".join(split_underscore)
     plt.title(f"Bar plot of mean absolute SHAP value for {model_title}")
     plt.tight_layout()
+    
     plt.savefig(f"../../outputs/modelling/{model_name}/{model_name}_SHAP_plot.pdf") # save plot to corresponding output directory with relevant path
  
 
@@ -69,7 +70,6 @@ logistic_reg_model_name = "logistic_regression"
 with open(f"../../outputs/modelling/{logistic_reg_model_name}/logistic_reg_trained.pkl", "rb") as pkl_file:
     log_reg_model = pickle.load(pkl_file)
     
-logistic_reg_model_name = "logistic_regression"
 
 perform_SHAP_and_create_plot(
     fitted_model=log_reg_model,
@@ -94,7 +94,7 @@ with open(f"../../outputs/modelling/{gbc_model_name}/gbc_trained.pkl", "rb") as 
     gbc_model = pickle.load(pkl_file)
 
 perform_SHAP_and_create_plot(
-    fitted_model=log_reg_model,
+    fitted_model=gbc_model,
     x_train_data=x_train,
     x_test_data=x_test,
     model_name=gbc_model_name
@@ -106,4 +106,3 @@ create_ROC_plot(
     y_test_data=y_test,
     model_name=gbc_model_name
 )
-

@@ -1,21 +1,21 @@
 Feature,Importance Score
-Total income/Total expense,0.4543587026242634
-Interest Expense Ratio,0.10430197093715377
-Degree of Financial Leverage (DFL),0.05748320482125472
-Cash Turnover Rate,0.053163103605795604
-No-credit Interval,0.05289368331374269
-Operating profit per person,0.0427376745243807
-Inventory/Working Capital,0.04197533999912421
-Total Asset Growth Rate,0.037923138307647535
-Realized Sales Gross Profit Growth Rate,0.035919891185906536
-Interest Coverage Ratio (Interest expense to EBIT),0.035776890412482366
-Continuous Net Profit Growth Rate,0.025095263364392974
-Fixed Assets Turnover Frequency,0.016361175812960673
-Tax rate (A),0.008328692326568706
-Inventory Turnover Rate (times),0.007481888477570519
-Quick Asset Turnover Rate,0.007076460236440504
-Research and development expense rate,0.005654017525467612
-Current Asset Turnover Rate,0.004081588497660341
-Inventory/Current Liability,0.0034300999139351414
-Operating Expense Rate,0.003206528951794149
-Cash/Current Liability,0.0027506851614576867
+Total income/Total expense,0.46312272581632946
+Current Liability to Current Assets,0.09084373642445782
+Interest Expense Ratio,0.06782587442995942
+Cash/Total Assets,0.058714267982316944
+Interest Coverage Ratio (Interest expense to EBIT),0.04445082643315378
+Degree of Financial Leverage (DFL),0.03970654877858767
+Operating profit per person,0.03869521926283791
+Realized Sales Gross Profit Growth Rate,0.03092034181157988
+Inventory/Working Capital,0.030396319211341994
+Total Asset Growth Rate,0.02893765947282183
+Continuous Net Profit Growth Rate,0.02612397700430947
+No-credit Interval,0.02032788722172188
+Cash Turnover Rate,0.01845614383225798
+Tax rate (A),0.010871716921962805
+Inventory Turnover Rate (times),0.007319552303274312
+Research and development expense rate,0.006289949841741952
+Fixed Assets Turnover Frequency,0.005033005465838248
+Quick Asset Turnover Rate,0.004633223327695405
+Operating Expense Rate,0.004288153784008405
+Current Asset Turnover Rate,0.00304287067380309
