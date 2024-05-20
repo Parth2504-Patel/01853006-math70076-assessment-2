@@ -22,7 +22,7 @@ def perform_SHAP_and_create_plot(fitted_model, x_train_data, x_test_data, model_
 
     # Visual plot settings
     plt.figure(figsize=(20,6))
-    shap.plots.bar(model_shap_vals, max_display=11, show=False) # create shap bar plot
+    shap.plots.bar(model_shap_vals, max_display=11, show=False) # create shap bar plot, max display 11 since one extra feature represent all other is used.
     plt.yticks(fontsize=6)
     plt.xlabel("Mean absolute SHAP value", fontsize=6)
     split_underscore = model_name.split("_")
@@ -93,6 +93,7 @@ create_ROC_plot(
 #============================
 # Gradient Boosting Classifier
 #============================
+
 gbc_model_name = "gradient_boosting_classifier"
 
 with open(os.path.join(root_folder, "outputs", "modelling", gbc_model_name, "gbc_trained.pkl"), "rb") as pkl_file:

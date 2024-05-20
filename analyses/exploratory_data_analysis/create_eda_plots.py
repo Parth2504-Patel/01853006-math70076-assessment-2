@@ -17,9 +17,9 @@ all_ys = bankruptcy_df["Bankrupt?"]
 target_count = all_ys.value_counts() # get number of each target class
 target_labels = ["Not Bankrupt", "Bankrupt"] 
 plt.pie(target_count, 
-         explode=(0,0.1),
+         explode=(0.2, 0), # add bit of 3d effect
          labels=target_labels,
-         autopct="%1.2f%%",
+         autopct="%.2f%%", # show percentage to 2 decimal places
          shadow=True)
 
 plt.axis("equal")
