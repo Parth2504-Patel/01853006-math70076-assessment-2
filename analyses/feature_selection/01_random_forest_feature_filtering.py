@@ -11,10 +11,17 @@ from sklearn.model_selection import ParameterGrid
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import f1_score
 import pickle
+import os
 
 # Read in data and list of filtered features
-train_dataset = pd.read_csv("../../data/derived/scaled_balanced_train_dataset.csv") # relative file pathing 
-vif_filtered_feature_list = pd.read_csv("../../outputs/feature_selection/feature_lists/vif_filtered_features_list.txt")["feature_name"] # list containing VIF filtered features
+root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) # obtain path of root folder
+train_ds_path = os.path.join(root_folder, "data","derived", "balanced_scaled_train_dataset.csv") 
+train_dataset = pd.read_csv(train_ds_path) # relative file pathing
+
+feature_selection_output_path = os.path.join(root_folder, "outputs", "feature_selection")
+vif_list_path = os.path.join(feature_selection_output_path, "feature_lists", "vif_filtered_features_list.txt") 
+
+vif_filtered_feature_list = pd.read_csv(vif_list_path)["feature_name"] # list containing VIF filtered features
 
 data_X = train_dataset[vif_filtered_feature_list] # get all X's using the filtered features
 data_Y = train_dataset["bankrupt_status"] # get y data
@@ -53,8 +60,8 @@ top_20_features_idx = descending_feature_importance_idx[:20] # get top 20 indice
 top_20_features_names = data_X.columns[top_20_features_idx] # get top 20 feature names
 
 top_20_features_names_pd = pd.DataFrame(top_20_features_names, columns=["feature_name"]) 
-top_20_features_names_pd.to_csv("../../outputs/feature_selection/feature_lists/random_forest_filtered_features_list.txt", index=False) # write top feature names to txt file
+top_20_features_names_pd.to_csv(os.path.join(feature_selection_output_path, "feature_lists", "random_forest_filtered_features_list.txt"), index=False) # write top feature names to txt file
 
 # save the best model so training / tuning doesnt have to be run again for efficiency
-with open("../../outputs/feature_selection/feature_selector_random_forest_trained.pkl", "wb") as model_file:
+with open(os.path.join(feature_selection_output_path, "feature_selector_random_forest_trained.pkl") , "wb") as model_file:
     pickle.dump(best_random_forest_model, model_file)

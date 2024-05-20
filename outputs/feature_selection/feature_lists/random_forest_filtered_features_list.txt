@@ -1,21 +1,21 @@
 feature_name
-Degree of Financial Leverage (DFL)
 Total income/Total expense
+Degree of Financial Leverage (DFL)
+Current Liability to Current Assets
 Interest Expense Ratio
 Interest Coverage Ratio (Interest expense to EBIT)
-Inventory/Working Capital
 Operating profit per person
+Cash/Total Assets
+Inventory/Working Capital
 Tax rate (A)
 No-credit Interval
 Continuous Net Profit Growth Rate
 Realized Sales Gross Profit Growth Rate
 Total Asset Growth Rate
 Cash Turnover Rate
-Research and development expense rate
 Inventory Turnover Rate (times)
+Research and development expense rate
 Fixed Assets Turnover Frequency
 Quick Asset Turnover Rate
 Operating Expense Rate
 Current Asset Turnover Rate
-Cash/Current Liability
-Inventory/Current Liability

@@ -14,6 +14,7 @@ Inventory Turnover Rate (times)
 Fixed Assets Turnover Frequency
 Operating profit per person
 Allocation rate per person
+Cash/Total Assets
 Cash/Current Liability
 Inventory/Working Capital
 Inventory/Current Liability
@@ -22,6 +23,7 @@ Total income/Total expense
 Current Asset Turnover Rate
 Quick Asset Turnover Rate
 Cash Turnover Rate
+Current Liability to Current Assets
 Total assets to GNP price
 No-credit Interval
 Degree of Financial Leverage (DFL)
