@@ -1,6 +1,6 @@
 # 01853006-math70076-assessment-2
 
-## Status : First Tagged Release
+## Status : First main checkpoint achieved V1.0._ (last number in version refers to minor edits)
 
 This repository contains the project directory for coursework 2 for math70076 for author 01853006. 
 This project models a Taiwanese companies bankruptcy dataset and aims to perform feature importance analysis by fitting various machine learning models and using them as the basis of the analysis. This analysis allows one to get a better understanding of statistical methods to tackle common issues faced in this sort of anaylsis, and understand how to use / combined different methodlogies and process to produce a coherent piece. Details of the origin of the dataset can be found in the [Acknowledgements](#acknowledgements) section.
@@ -50,7 +50,15 @@ Then this repository can be cloned. There are many options available to do this,
 git clone https://github.com/Parth2504-Patel/01853006-math70076-assessment-2.git
 
 ## Usage
-Once you are setup with this repository, you can use this repository in any manner that is suitable for you. You can reproduce the results by following the section in [Project Structure](#project-structure), or you can extend on this project in whichever manner best suits you. 
+Once you are setup with this repository, you can use this repository in any manner that is suitable for you. You can reproduce the results by using the section in [Project Structure](#project-structure). The order is as follows :
+
+Assuming the raw dataset is available (if not, run src/create_dataset_as_csv.py)
+1) Run analyses/data_processing/create_train_test_split.py  
+2) Run both files in named order in analyses/feature_selection
+3) Run analyses/data_processing/create_selected_features_dataset.py
+4) Run both files in analyses/modelling, where first the fit_ml_models.py file should be run, and then the create_eval_results_plots.py 
+
+The above flow will reproduce the workflow chosen. 
 
 ## Acknowledgements
 - The dataset is found from the UCI website, under the Creative Commons website, at https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction
@@ -62,6 +70,7 @@ This project uses MIT License. Please visit the [LICENSE](LICENSE) file for more
 
 ## FAQs
 - How can I contribute to this project?
+
 GitHub users are invited to contribute to this repo. The steps to this would be as follows : 
 1) Fork the repository and clone this forked repository. 
 2) Create a new branch from the master branch, which isolated the contribution you would like to make.
@@ -69,4 +78,5 @@ GitHub users are invited to contribute to this repo. The steps to this would be 
 4) You can now open a pull request and once submitted, and I will process this as quickly as I can. 
 
 - I want to get in contact with you, how can I do this?
+
 Any questions are welcomed. To get in touch, the best method would be via email. The email address is 01853006@imperial.ac.uk

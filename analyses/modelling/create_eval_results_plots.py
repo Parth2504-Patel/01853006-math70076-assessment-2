@@ -10,8 +10,6 @@ from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
 import os
 
-root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) # obtain path of root folder
-
 def perform_SHAP_and_create_plot(fitted_model, x_train_data, x_test_data, model_name):
     '''
     This function performs SHAP analysis and creates a barplot showing the top 10 mean absolute shap values and their corresponding features
@@ -57,6 +55,7 @@ def create_ROC_plot(fitted_model, x_test_data, y_test_data, model_name):
     plt.savefig(save_path) # save plot to corresponding output directory with relevant path
 
 # Read in train dataset
+root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) # obtain path of root folder
 train_dataset = pd.read_csv(os.path.join(root_folder, "data", "derived", "selected_features_train_dataset.csv"))
 x_train = train_dataset.drop("bankrupt_status", axis=1)
 y_train = train_dataset["bankrupt_status"]

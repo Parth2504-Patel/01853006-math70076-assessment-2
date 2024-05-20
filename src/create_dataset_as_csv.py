@@ -15,6 +15,7 @@ y = taiwanese_bankruptcy_prediction.data.targets
 raw_data_df = pd.concat([y, X], axis=1) # store dataset as its own .csv file as its imported from ucimlrepo library
 
 # Save dataframe to the csv file
-csv_file_path = "../data/raw/Taiwanese_Bankruptcy_Dataset.csv" # specifiy where to save file using relative file paths
+root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) # obtain path of root folder
 
+csv_file_path = os.path.join(root_folder, "data", "raw", "Taiwanese_Bankruptcy_Dataset.csv")
 raw_data_df.to_csv(csv_file_path, index=False) # save dataset to file path specified
