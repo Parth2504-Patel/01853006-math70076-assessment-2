@@ -37,13 +37,14 @@ def sort_and_write_scores(desired_df, sort_by_column, save_file_path):
     # try catch some common exceptions to provide more informative error to user
     except PermissionError as perm_err:
         # Catches cases where there is a permission error
-        print(f"Permission is denied to write to file path {save_file_path}, Please check permissions \n The exact error is {perm_err}")   
+        print(f"Permission is denied to write to file path {save_file_path}, Please check permissions. \n The exact error is {perm_err}")   
         
     except pd.errors.EmptyDataError as empty_df_err:
         # Error if the dataframe is empty
         print(f"The dataframe is empty, please check dataframe construction \n Exact error is {empty_df_err}")
     
     except Exception as unexpected_e:
+        # Catch all other cases
         print(f"Unexpected error has occured \n Exact error is {unexpected_e}")   
 
 def save_trained_model(trained_model, save_file_path):
@@ -66,7 +67,7 @@ penalty_param_range = np.linspace(0.001, 100, 1000) # define range of values to 
 # Perform cross-validation to tune hyperparameter
 log_reg_CV = LogisticRegressionCV(
     penalty="l1", # l1 penalty used for its sparsity property,
-    solver="liblinear", # default solver doesnt support l1 penalty
+    solver="liblinear", # default solver doesnt support l1 penalty hence liblinear used
     Cs=penalty_param_range, # pass in the range of values to try for hyperparameter
     scoring="f1", # regularisation parameter that maximises F1 score is chosen
     cv=ten_folds, # 10-Fold CV used
@@ -113,6 +114,7 @@ gradient_boosting_param_grid = {
 
 gradient_boosting_model = GradientBoostingClassifier(random_state=1853006) # create gradient boosting classifier base model
 
+# Perform cross-validation grid search to find best hyperparameter configuration for gradient boosting classifier
 gradient_boosting_CV = GridSearchCV(
     estimator=gradient_boosting_model,
     param_grid=gradient_boosting_param_grid, # pass in custom hyperparameter grid created 

@@ -1,5 +1,5 @@
 '''
-This file performs SHAP analysis and creates its corresponding plot.
+This file performs SHAP analysis and creates its corresponding bar plot.
 This file also creates the ROC curve to show the classifiers performance.
 '''
 # Imports
@@ -37,8 +37,8 @@ def create_ROC_plot(fitted_model, x_test_data, y_test_data, model_name):
     '''
     This function creates the ROC curve plot for the model provided. It also calculates the area under the curve and reported in its label in the legend.
     '''
-    y_predicted_probs = fitted_model.predict_proba(x_test_data)[:, 1] # get probability for class one
-    false_positive_rate, true_positive_rate, _ = roc_curve(y_test_data, y_predicted_probs) # calculate false and true positive rate
+    y_predicted_prob = fitted_model.predict_proba(x_test_data)[:, 1] # get probability for class one
+    false_positive_rate, true_positive_rate, _ = roc_curve(y_test_data, y_predicted_prob) # calculate false and true postiive rate
     area_under_curve_score = auc(false_positive_rate, true_positive_rate) # calculae AUC score (area under curve)
     
     # Visual plot settings
@@ -69,7 +69,7 @@ y_test = test_dataset["bankrupt_status"]
 #============================
 # Logistic Regression
 #============================
-# Read in logistic regression saved model
+
 logistic_reg_model_name = "logistic_regression"
 
 with open(os.path.join(root_folder, "outputs", "modelling", logistic_reg_model_name, "logistic_reg_trained.pkl"), "rb") as pkl_file:

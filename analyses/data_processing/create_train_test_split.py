@@ -1,7 +1,7 @@
 '''
 This file creates a train-test split using the original data. (seed set for reproducibility)
 Random over and undersampling is done on the train dataset to mitigate class imbalance issue.
-Scaling is fitted on the train dataset, and the same scaling transformation is applied to the test datsets to avoid data leakage. Note, binary variables are handles appropraitely.
+Scaling is fitted on the resampled train dataset, and the same scaling transformation is applied to the test datset to avoid data leakage. Note, binary variables are handles appropraitely.
 '''
 
 # Imports
@@ -54,10 +54,10 @@ train_X_balanced, train_Y_balanced = under_sampler.fit_resample(X_oversampled, Y
 train_X_balanced, train_Y_balanced = shuffle(train_X_balanced, train_Y_balanced, random_state=1853006)
 
 #---------------------------------------------------------------------------------
-# Perform scaling
+# Perform scaling of datasets
 #---------------------------------------------------------------------------------
 
-# binary variable dropped, as only continous variable scaled
+# binary variable dropped temporarily, as only continous variable scaled
 continious_train_x = train_X_balanced.drop(["Liability-Assets Flag"], axis=1)
 continious_test_x = x_test.drop(["Liability-Assets Flag"], axis=1)
 
@@ -89,8 +89,6 @@ test_dataset = pd.concat([
     x_test["Liability-Assets Flag"],
     y_test
 ], axis=1)
-
-# Write to CSV files
 
 train_dataset.to_csv(os.path.join(data_path, "derived", "balanced_scaled_train_dataset.csv"), index=False)
 test_dataset.to_csv(os.path.join(data_path, "derived", "scaled_test_dataset.csv"), index=False)

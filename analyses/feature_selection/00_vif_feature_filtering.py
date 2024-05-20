@@ -24,7 +24,7 @@ train_xs_with_const = sm.add_constant(train_xs, prepend=True) # add constant, ne
 num_of_variables = len(train_xs_with_const.columns)
 vif_df = pd.DataFrame(train_xs_with_const.columns, columns=["feature_name"])
 vif_df["vif_score"] = [variance_inflation_factor(train_xs_with_const.values, i) for i in range(num_of_variables)] # list comprehension to efficiently calculate VIF score for each column
-vif_df = vif_df[vif_df["feature_name"] != "const"] # filter out constant as it is not a feature, only included in for complete calculations
+vif_df = vif_df[vif_df["feature_name"] != "const"] # filter out constant as it is not a feature, only included in calculations for completeness.
 
 # Filter out features that have score higher than threshold (set to 5 as suggested by literature)
 vif_threshold = 5

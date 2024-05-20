@@ -8,13 +8,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns 
 
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) # obtain path of root folder
-data_path = os.path.join(root_folder, "data") # file path to data folder. Defined once, used multiple times
+data_path = os.path.join(root_folder, "data", "raw", "Taiwanese_Bankruptcy_Dataset.csv") 
 
-bankruptcy_df = pd.read_csv(os.path.join(data_path, "raw", "Taiwanese_Bankruptcy_Dataset.csv"))  # relative file paths used, aligning with data science principles
+bankruptcy_df = pd.read_csv(data_path) # relative file paths used, aligning with data science principles
 all_ys = bankruptcy_df["Bankrupt?"]
 
 ## Create pie chart of target variable
-target_count = all_ys.value_counts()
+target_count = all_ys.value_counts() # get number of each target class
 target_labels = ["Not Bankrupt", "Bankrupt"] 
 plt.pie(target_count, 
          explode=(0,0.1),

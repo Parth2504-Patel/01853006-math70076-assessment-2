@@ -1,6 +1,6 @@
 '''
 This file is stage two of two for the feature selection process. Using the filtered variables from the VIF calculation, a further filtration is done using Random Forest.
-A Random Forest classifier is first tuned using Cross-Validation, and then the tune hyperparameters are used to fit a random forest classifier.
+A Random Forest classifier is first tuned using Cross-Validation, and then the tuned hyperparameters are used to fit a random forest classifier.
 The feature importance property of random forest classifier is used to then select the top 20 features, which forms the final subset of features considered.
 '''
 
@@ -20,7 +20,6 @@ train_dataset = pd.read_csv(train_ds_path) # relative file pathing
 
 feature_selection_output_path = os.path.join(root_folder, "outputs", "feature_selection")
 vif_list_path = os.path.join(feature_selection_output_path, "feature_lists", "vif_filtered_features_list.txt") 
-
 vif_filtered_feature_list = pd.read_csv(vif_list_path)["feature_name"] # list containing VIF filtered features
 
 train_X = train_dataset[vif_filtered_feature_list] # get all X's using the filtered features
@@ -64,5 +63,5 @@ top_20_features_names_pd = pd.DataFrame(top_20_features_names, columns=["feature
 top_20_features_names_pd.to_csv(os.path.join(feature_selection_output_path, "feature_lists", "random_forest_filtered_features_list.txt"), index=False) # write top feature names to txt file
 
 # save the best model so training / tuning doesnt have to be run again for efficiency
-with open(os.path.join(feature_selection_output_path, "feature_selector_random_forest_trained.pkl") , "wb") as model_file:
-    pickle.dump(best_random_forest_model, model_file)
+with open(os.path.join(feature_selection_output_path, "feature_selector_random_forest_trained.pkl") , "wb") as rf_file:
+    pickle.dump(best_random_forest_model, rf_file)
