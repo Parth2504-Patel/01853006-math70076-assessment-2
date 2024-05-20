@@ -26,7 +26,7 @@ This repository contains various folders aiming to breakdown the workflow in eas
 
  - ["modelling"](analyses/modelling/) - This folder contains the scripts to tune/train the machine learning, to create the evaluation plot and perform SHAP analysis.
 
-- "data/" - This contains both the original and manipulated data that is used within the project. The original is in the "raw/" subfolder, and any manipulated are in "derived/" which includes the scaled train and test data, and the dataset with the 20 chosen features returned from feature selection. 
+- [data/"](data/) - This contains both the original and manipulated data that is used within the project. The original is in the ["raw/"](data/raw/) subfolder, and any manipulated are in ["derived/"](data/derived/) which includes the scaled train and test data, and the dataset with the 20 chosen features returned from feature selection. 
 
 Within the "data/derived/" there are 4 sets of datasets available. These represent the intermediate stages, and the final two that are used for training and evaluating the models are highlighted at the end of this section. 
 
@@ -35,11 +35,11 @@ Within the "data/derived/" there are 4 sets of datasets available. These represe
 
 "selected_features{train/test}_dataset.csv" use the corresponding train or train (replace {train/test} with the dataset desired) from the first set to narrow it down to the final 20 features selected.
 
-- "outputs/" - This folder contains the outputs from the scripts within this directory, which includes outputs such as plots, saved model files (.pkl) etc. This is subcateogrised in terms of the analysis conducted to group together related outputs together. The next level of directories to "outputs/" mirrors the "analyses/" directory, in which the corresponding outputs from the folder under "analyses/" is stored in the same folder name under "outputs/". 
+- ["outputs/"](outputs/) - This folder contains the outputs from the scripts within this directory, which includes outputs such as plots, saved model files (.pkl) etc. This is subcateogrised in terms of the analysis conducted to group together related outputs together. The next level of directories to "outputs/" mirrors the "analyses/" directory, in which the corresponding outputs from the folder under "analyses/" is stored in the same folder name under "outputs/". 
 
-- "reports/" - This folder contains the relevant files to produce the final report. This includes the bibliography for the report, and the report itself in .tex for. The .pdf form of this can be found in the /outputs directory. 
+- ["reports/"](reports/) - This folder contains the relevant files to produce the final report. This includes the bibliography for the report, and the report itself in .tex for. The .pdf form of this can be found in the /outputs directory. 
 
-- "src/" - This contains a script to create the raw dataset as the dataset is imported from the UCI package as advised on the dataset documnetation. (See [Acknowledgements](#acknowledgements) section for link to dataset)
+- ["src/"](src/) - This contains a script to create the raw dataset as the dataset is imported from the UCI package as advised on the dataset documnetation. (See [Acknowledgements](#acknowledgements) section for link to dataset)
 
 ## Setup
 Setting up a new virtual environment for this project is recommened to ensure that the specified dependencies for this version match to ensure no clashes occur, however this is a choice that is left to the user. 
@@ -50,7 +50,7 @@ Then this repository can be cloned. There are many options available to do this,
 git clone https://github.com/Parth2504-Patel/01853006-math70076-assessment-2.git
 
 ## Usage
-Once you are setup with this repository, you can use this repository in any manner that is suitable for you. You can reproduce the results by following the section in [Priject Structure](#project-structure), or you can extend on this project in whichever manner best suits you. 
+Once you are setup with this repository, you can use this repository in any manner that is suitable for you. You can reproduce the results by following the section in [Project Structure](#project-structure), or you can extend on this project in whichever manner best suits you. 
 
 ## Acknowledgements
 - The dataset is found from the UCI website, under the Creative Commons website, at https://archive.ics.uci.edu/dataset/572/taiwanese+bankruptcy+prediction
