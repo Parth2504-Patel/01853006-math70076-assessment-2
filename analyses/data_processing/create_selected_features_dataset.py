@@ -28,7 +28,7 @@ read_select_write_dataset(
     output_path= os.path.join(derived_data_path, "selected_features_train_dataset.csv")
 )
 
-# Train dataset
+# Test dataset
 read_select_write_dataset(
     inital_path= os.path.join(derived_data_path, "scaled_test_dataset.csv"),
     output_path= os.path.join(derived_data_path, "selected_features_test_dataset.csv")
