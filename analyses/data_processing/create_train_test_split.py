@@ -27,9 +27,9 @@ bankruptcy_df = bankruptcy_df.drop("Net Income Flag", axis=1) # Noted to drop in
 all_input_predictors = bankruptcy_df.drop("bankrupt_status", axis=1)
 target_data = bankruptcy_df["bankrupt_status"]
 
-#---------------------------------------------------------------------------------
-# Create (straified) train-test split
-#---------------------------------------------------------------------------------
+#=================================================================================
+# Create (stratified) train-test split
+#=================================================================================
 
 # Perform stratified split (90-10 train test split), since its initial data exploration shows there is a class imbalance issue with small amount of data for minority class 
 x_train, x_test, y_train, y_test = train_test_split(
