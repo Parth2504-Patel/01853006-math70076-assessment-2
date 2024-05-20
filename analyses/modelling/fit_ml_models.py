@@ -18,8 +18,8 @@ root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."
 train_ds_path = os.path.join(root_folder, "data", "derived", "selected_features_train_dataset.csv") 
 train_dataset = pd.read_csv(train_ds_path) # relative file pathing used
 
-all_xs = train_dataset.drop("bankrupt_status", axis=1)
-all_ys = train_dataset["bankrupt_status"]
+train_xs = train_dataset.drop("bankrupt_status", axis=1)
+train_ys = train_dataset["bankrupt_status"]
 
 ten_folds = KFold(n_splits=10, shuffle=True, random_state=1853006) # create ten fold split of the dataset, can provide same split to all models to fit to
 
@@ -27,7 +27,7 @@ def sort_and_write_scores(desired_df, sort_by_column, save_file_path):
     '''
     The function takes in a dataframe, and sorts it by absolute value using the column name specified, and writes this sorted dataframe to csv for future reference. 
     The function sorts by the absolute value to account for models such as (logistic) regression, where the magnitude of the coefficient is an indicator of its importance to the model, and not the sign.
-    This function allows is used for easy scalability if more models are added in the future.
+    This function allows it to be used for easy scalability if more models are added in the future.
     '''
     sorted_desired_df = desired_df.sort_values(by=sort_by_column, ascending=False, key=abs) # sorts by absolute value in descending order using the column name specified
     
@@ -73,12 +73,12 @@ log_reg_CV = LogisticRegressionCV(
     random_state=1853006 # seed set for reproducibility 
 )
 
-log_reg_CV.fit(all_xs, all_ys) # perform gridsearchCV
+log_reg_CV.fit(train_xs, train_ys) # perform gridsearchCV
 all_logistic_reg_coeffs = log_reg_CV.coef_[0] # get all coefficients 
 
 # Store in dataframe for visual purposes, and easy to write to csv
 coeffs_df = pd.DataFrame({
-    "Feature" : all_xs.columns,
+    "Feature" : train_xs.columns,
     "Coefficient" : all_logistic_reg_coeffs
 })
 
@@ -120,11 +120,11 @@ gradient_boosting_CV = GridSearchCV(
     cv=ten_folds # pass in specific fold split to maintain uniformity training the two models
 )
 
-gradient_boosting_CV.fit(all_xs, all_ys) # perform gridsearch cross-validation for gradient boosting classifier
+gradient_boosting_CV.fit(train_xs, train_ys) # perform gridsearch cross-validation for gradient boosting classifier
 best_gb_classifier = gradient_boosting_CV.best_estimator_ # get model with best hyperparameter configuration
 
 gbc_feature_imp = pd.DataFrame({
-    "Feature"  : all_xs.columns,
+    "Feature"  : train_xs.columns,
     "Importance Score" : best_gb_classifier.feature_importances_
 })
 

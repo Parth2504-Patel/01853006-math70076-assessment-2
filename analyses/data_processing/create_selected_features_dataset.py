@@ -7,11 +7,15 @@ import pandas as pd
 import os
 
 def read_select_write_dataset(inital_path, output_path):
-    dataset = pd.read_csv(inital_path)
+    '''
+    This function reads in the full train/test datset (as desired), and then using the selected features obtained from feature selection stage, the data correpsonding to these features is aggregated and written to CSV.
+    Relative file pathing used to ensure reproducibility.
+    '''
+    dataset = pd.read_csv(inital_path) # read in initial full dataset
     final_selected_features = pd.read_csv("../../outputs/feature_selection/feature_lists/random_forest_filtered_features_list.txt")["feature_name"].tolist() # Read in the final selected features, and get corresponding columns from the datasets
     final_selected_features_and_target = final_selected_features +  ["bankrupt_status"] # get all input and target variables
-    selected_dataset = dataset[final_selected_features_and_target]
-    selected_dataset.to_csv(output_path, index=False)
+    selected_dataset = dataset[final_selected_features_and_target] # get data corresponding to desired input variables and target
+    selected_dataset.to_csv(output_path, index=False) # write selected features dataset to csv
 
 root_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) # obtain path of root folder
 dervied_data_path = os.path.join(root_folder, "data", "derived") 

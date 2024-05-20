@@ -23,8 +23,8 @@ vif_list_path = os.path.join(feature_selection_output_path, "feature_lists", "vi
 
 vif_filtered_feature_list = pd.read_csv(vif_list_path)["feature_name"] # list containing VIF filtered features
 
-data_X = train_dataset[vif_filtered_feature_list] # get all X's using the filtered features
-data_Y = train_dataset["bankrupt_status"] # get y data
+train_X = train_dataset[vif_filtered_feature_list] # get all X's using the filtered features
+train_Y = train_dataset["bankrupt_status"] # get y data
 
 # Define grid of hyperparameter to test
 random_forest_hyperparams = ParameterGrid({
@@ -38,6 +38,7 @@ best_random_forest_model = None
 
 # try different combinations of hyperparameters possible
 for hyperparam_config in random_forest_hyperparams:
+    
     # Define random forest model with custom hyperparameter settings
     random_forest_model = RandomForestClassifier(
         oob_score=f1_score, # using the OOB samples and setting the OOB score metric to F1 Score
@@ -47,7 +48,7 @@ for hyperparam_config in random_forest_hyperparams:
         random_state=1853006, # seed set to CID for reproducibility
     )
 
-    random_forest_model.fit(data_X, data_Y) # fit random forest classifier
+    random_forest_model.fit(train_X, train_Y) # fit random forest classifier
     
     # if a better configuarion is found, update this
     if random_forest_model.oob_score_> best_oob_score:
@@ -57,7 +58,7 @@ for hyperparam_config in random_forest_hyperparams:
 ## Select the top 20 features, which forms the final subset of features to use
 descending_feature_importance_idx = np.argsort(best_random_forest_model.feature_importances_)[::-1] # get indices of feature importances in descending order
 top_20_features_idx = descending_feature_importance_idx[:20] # get top 20 indices 
-top_20_features_names = data_X.columns[top_20_features_idx] # get top 20 feature names
+top_20_features_names = train_X.columns[top_20_features_idx] # get top 20 feature names
 
 top_20_features_names_pd = pd.DataFrame(top_20_features_names, columns=["feature_name"]) 
 top_20_features_names_pd.to_csv(os.path.join(feature_selection_output_path, "feature_lists", "random_forest_filtered_features_list.txt"), index=False) # write top feature names to txt file

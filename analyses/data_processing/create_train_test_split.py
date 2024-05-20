@@ -30,6 +30,7 @@ target_data = bankruptcy_df["bankrupt_status"]
 #---------------------------------------------------------------------------------
 # Create (straified) train-test split
 #---------------------------------------------------------------------------------
+
 # Perform stratified split (90-10 train test split), since its initial data exploration shows there is a class imbalance issue with small amount of data for minority class 
 x_train, x_test, y_train, y_test = train_test_split(
     all_input_predictors, target_data,
@@ -49,7 +50,7 @@ X_oversampled, Y_oversampled = over_sampler.fit_resample(x_train, y_train) # app
 under_sampler = RandomUnderSampler(sampling_strategy = 1, random_state = 1853006) 
 train_X_balanced, train_Y_balanced = under_sampler.fit_resample(X_oversampled, Y_oversampled) # apply undersampling to dataset
 
-# Inplace shuffling as undersampling returns ordered y values. 
+# Inplace shuffling as undersampling returns ordered y values. Shuffled data is preferred
 train_X_balanced, train_Y_balanced = shuffle(train_X_balanced, train_Y_balanced, random_state=1853006)
 
 #---------------------------------------------------------------------------------
@@ -73,7 +74,10 @@ train_X_balanced["Liability-Assets Flag"].reset_index(drop=True, inplace=True)
 x_test["Liability-Assets Flag"].reset_index(drop=True, inplace=True)
 y_test.reset_index(drop=True, inplace=True)
 
-## Form the train and test dataset
+#---------------------------------------------------------------------------------
+# Create train and test set, and write to CSVs
+#---------------------------------------------------------------------------------
+
 train_dataset = pd.concat([
     X_train_scaled_df, 
     train_X_balanced["Liability-Assets Flag"], 
