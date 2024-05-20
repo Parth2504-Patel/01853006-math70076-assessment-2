@@ -71,6 +71,7 @@ X_test_scaled_df = pd.DataFrame(X_test_scaled, columns=continious_test_x.columns
 train_Y_balanced.reset_index(drop=True, inplace=True)
 train_X_balanced["Liability-Assets Flag"].reset_index(drop=True, inplace=True)
 x_test["Liability-Assets Flag"].reset_index(drop=True, inplace=True)
+y_test.reset_index(drop=True, inplace=True)
 
 ## Form the train and test dataset
 train_dataset = pd.concat([
@@ -84,7 +85,6 @@ test_dataset = pd.concat([
     x_test["Liability-Assets Flag"],
     y_test
 ], axis=1)
-
 
 # Write to CSV files
 
